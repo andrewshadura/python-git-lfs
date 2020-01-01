@@ -12,6 +12,7 @@ setup(
     author_email='changaco@changaco.oy.lc',
     url='https://github.com/liberapay/git-lfs-fetch.py',
     license='CC0',
+    python_requires='~=3.6',
     packages=find_packages(exclude=['tests']),
     long_description=open(join(dirname(__file__), 'README.rst')).read(),
     long_description_content_type='text/x-rst',

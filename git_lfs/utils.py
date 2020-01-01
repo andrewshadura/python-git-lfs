@@ -1,5 +1,3 @@
-from __future__ import division, print_function, unicode_literals
-
 from contextlib import contextmanager
 import os
 import shutil
@@ -25,17 +23,6 @@ def in_dir(dirpath):
     finally:
         os.chdir(prev)
 
-
-@contextmanager
-def TempDir(**kw):
-    """mkdtemp wrapper that automatically deletes the directory
-    """
-    d = mkdtemp(**kw)
-    try:
-        yield d
-    finally:
-        with ignore_missing_file(d):
-            shutil.rmtree(d)
 
 
 @contextmanager

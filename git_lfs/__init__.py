@@ -1,19 +1,13 @@
-from __future__ import division, print_function, unicode_literals
-
 import json
 import os
 import pprint
 from subprocess import CalledProcessError, check_output, PIPE, Popen, STDOUT
-try:
-    from urllib.parse import urlsplit, urlunsplit
-    from urllib.request import Request, urlopen
-    from urllib.error import HTTPError
-except ImportError:
-    from urllib2 import Request, urlopen
-    from urllib2 import HTTPError
-    from urlparse import urlsplit, urlunsplit
+from urllib.parse import urlsplit, urlunsplit
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError
 
-from .utils import force_link, ignore_missing_file, in_dir, TempDir, TempFile
+from tempfile import TemporaryDirectory
+from .utils import force_link, ignore_missing_file, in_dir, TempFile
 
 
 MEDIA_TYPE = 'application/vnd.git-lfs+json'
@@ -162,7 +156,7 @@ def fetch(git_repo, checkout_dir=None, verbose=0):
         raise SystemExit(1)
     checkout_git_dir = checkout_dir+'/.git'
     if not os.path.isdir(checkout_git_dir):
-        with TempDir(dir=checkout_dir) as d:
+        with TemporaryDirectory(dir=checkout_dir) as d:
             check_output(['git', 'clone', '-ns', git_repo, d], stderr=STDOUT)
             os.rename(d+'/.git', checkout_git_dir)
             with in_dir(checkout_dir):
